@@ -1,0 +1,14 @@
+node_modules/
+.next/
+dist/
+.env
+.DS_Store
+serviceAccountKey.json
+node_modules/
+dist/
+coverage/
+.env
+*.log
+.DS_Store
+tmp/
+*.zip
