@@ -114,28 +114,31 @@ const HomePage = () => {
         <HeroFigmaNew />
       </section>
 
-      {/* About Section */}
-      <section className="py-20 sm:py-24 md:py-32 lg:py-40 px-4 bg-background relative overflow-visible" style={{ zIndex: 100 }}>
+      {/* About Section - Mobile Optimized */}
+      <section className="py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 px-4 bg-background relative overflow-visible" style={{ zIndex: 100 }}>
         <div className="max-w-7xl mx-auto overflow-visible">
-          <div style={{ minHeight: '600px', position: 'relative', overflow: 'visible' }} className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            {/* Left Side - Title and Navigation */}
-            <div className="flex flex-col items-start gap-8 z-20">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-foreground tracking-tight leading-tight">
+          
+          {/* Mobile-First Layout */}
+          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12 xl:gap-16">
+            
+            {/* Title Section - Better mobile typography */}
+            <div className="w-full lg:w-auto lg:flex-shrink-0">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-serif font-bold text-foreground tracking-tight leading-tight mb-6 lg:mb-8">
                 About<br />Entrepreneurship<br />Development Cell
               </h2>
 
-              {/* Navigation Buttons */}
-              <div className="flex gap-3">
+              {/* Navigation Buttons - Hidden on mobile, visible on desktop */}
+              <div className="hidden lg:flex gap-3">
                 <button
                   onClick={() => {
                     if (typeof window !== 'undefined' && (window as any).cardSwapNext) {
                       (window as any).cardSwapNext();
                     }
                   }}
-                  className="p-4 bg-foreground/10 hover:bg-foreground/20 border border-foreground/20 rounded-full transition-all group backdrop-blur-sm"
+                  className="p-3 lg:p-4 bg-foreground/10 hover:bg-foreground/20 border border-foreground/20 rounded-full transition-all group backdrop-blur-sm"
                   aria-label="Previous card"
                 >
-                  <svg className="w-6 h-6 text-foreground group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6 text-foreground group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -146,95 +149,158 @@ const HomePage = () => {
                       (window as any).cardSwapNext();
                     }
                   }}
-                  className="p-4 bg-foreground/10 hover:bg-foreground/20 border border-foreground/20 rounded-full transition-all group backdrop-blur-sm"
+                  className="p-3 lg:p-4 bg-foreground/10 hover:bg-foreground/20 border border-foreground/20 rounded-full transition-all group backdrop-blur-sm"
                   aria-label="Next card"
                 >
-                  <svg className="w-6 h-6 text-foreground group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 lg:w-6 lg:h-6 text-foreground group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               </div>
             </div>
 
-            {/* Right Side - Card Stack */}
-            <div style={{ flex: 1, height: '100%', position: 'relative' }}>
-              <CardSwap
-                cardDistance={60}
-                verticalDistance={70}
-                delay={5000}
-                pauseOnHover={true}
-                width={600}
-                height={400}
-                onSwapRef={(swapFn) => {
-                  if (typeof window !== 'undefined') {
-                    (window as any).cardSwapNext = swapFn;
-                  }
-                }}
-              >
-                <Card>
-                  <div className="p-8 h-full flex flex-col justify-center">
-                    <div className="flex items-center gap-6 mb-6">
-                      <div className="w-14 h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-7 h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground">Our Mission</h3>
+            {/* Content Section */}
+            <div className="w-full lg:flex-1">
+              
+              {/* Mobile: Simple Cards Grid */}
+              <div className="lg:hidden grid gap-6 sm:gap-8">
+                <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 sm:p-8 hover:bg-card/70 transition-all">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
                     </div>
-                    <p className="text-lg text-foreground/90 leading-relaxed font-light">
-                      The Entrepreneurship Development Cell (EDC) at our college aims to nurture entrepreneurial spirit among students by providing mentorship, resources, and opportunities to transform innovative ideas into successful ventures.
-                    </p>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-foreground">Our Mission</h3>
                   </div>
-                </Card>
+                  <p className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light">
+                    The Entrepreneurship Development Cell (EDC) at our college aims to nurture entrepreneurial spirit among students by providing mentorship, resources, and opportunities to transform innovative ideas into successful ventures.
+                  </p>
+                </div>
 
-                <Card>
-                  <div className="p-8 h-full flex flex-col justify-center">
-                    <div className="flex items-center gap-6 mb-6">
-                      <div className="w-14 h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-7 h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground">Mentorship</h3>
+                <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 sm:p-8 hover:bg-card/70 transition-all">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
                     </div>
-                    <p className="text-lg text-foreground/90 leading-relaxed font-light">
-                      We connect students with experienced entrepreneurs, industry leaders, and successful founders who provide guidance, share insights, and help navigate the challenging journey from idea to execution.
-                    </p>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-foreground">Mentorship</h3>
                   </div>
-                </Card>
+                  <p className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light">
+                    We connect students with experienced entrepreneurs, industry leaders, and successful founders who provide guidance, share insights, and help navigate the challenging journey from idea to execution.
+                  </p>
+                </div>
 
-                <Card>
-                  <div className="p-8 h-full flex flex-col justify-center">
-                    <div className="flex items-center gap-6 mb-6">
-                      <div className="w-14 h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-7 h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground">Innovation Hub</h3>
+                <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 sm:p-8 hover:bg-card/70 transition-all">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                      </svg>
                     </div>
-                    <p className="text-lg text-foreground/90 leading-relaxed font-light">
-                      Through workshops, hackathons, ideathons, and startup mentorship programs, we create an ecosystem where creativity thrives and groundbreaking ideas come to life through collaboration and experimentation.
-                    </p>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-foreground">Innovation Hub</h3>
                   </div>
-                </Card>
+                  <p className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light">
+                    Through workshops, hackathons, ideathons, and startup mentorship programs, we create an ecosystem where creativity thrives and groundbreaking ideas come to life through collaboration and experimentation.
+                  </p>
+                </div>
 
-                <Card>
-                  <div className="p-8 h-full flex flex-col justify-center">
-                    <div className="flex items-center gap-6 mb-6">
-                      <div className="w-14 h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-7 h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <h3 className="text-3xl font-serif font-bold text-foreground">Community</h3>
+                <div className="bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 sm:p-8 hover:bg-card/70 transition-all">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 sm:w-7 sm:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
                     </div>
-                    <p className="text-lg text-foreground/90 leading-relaxed font-light">
-                      Join a vibrant community of like-minded innovators, entrepreneurs, and dreamers. Network, collaborate, and build lasting connections that extend beyond the classroom into the real world of business and innovation.
-                    </p>
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-foreground">Community</h3>
                   </div>
-                </Card>
-              </CardSwap>
+                  <p className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light">
+                    Join a vibrant community of like-minded innovators, entrepreneurs, and dreamers. Network, collaborate, and build lasting connections that extend beyond the classroom into the real world of business and innovation.
+                  </p>
+                </div>
+              </div>
+
+              {/* Desktop: Interactive Card Stack */}
+              <div className="hidden lg:block" style={{ minHeight: '500px', position: 'relative' }}>
+                <CardSwap
+                  cardDistance={60}
+                  verticalDistance={70}
+                  delay={5000}
+                  pauseOnHover={true}
+                  width={600}
+                  height={400}
+                  onSwapRef={(swapFn) => {
+                    if (typeof window !== 'undefined') {
+                      (window as any).cardSwapNext = swapFn;
+                    }
+                  }}
+                >
+                  <Card>
+                    <div className="p-6 lg:p-8 h-full flex flex-col justify-center">
+                      <div className="flex items-center gap-4 lg:gap-6 mb-4 lg:mb-6">
+                        <div className="w-12 h-12 lg:w-14 lg:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-2xl lg:text-3xl font-serif font-bold text-foreground">Our Mission</h3>
+                      </div>
+                      <p className="text-base lg:text-lg text-foreground/90 leading-relaxed font-light">
+                        The Entrepreneurship Development Cell (EDC) at our college aims to nurture entrepreneurial spirit among students by providing mentorship, resources, and opportunities to transform innovative ideas into successful ventures.
+                      </p>
+                    </div>
+                  </Card>
+
+                  <Card>
+                    <div className="p-6 lg:p-8 h-full flex flex-col justify-center">
+                      <div className="flex items-center gap-4 lg:gap-6 mb-4 lg:mb-6">
+                        <div className="w-12 h-12 lg:w-14 lg:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-2xl lg:text-3xl font-serif font-bold text-foreground">Mentorship</h3>
+                      </div>
+                      <p className="text-base lg:text-lg text-foreground/90 leading-relaxed font-light">
+                        We connect students with experienced entrepreneurs, industry leaders, and successful founders who provide guidance, share insights, and help navigate the challenging journey from idea to execution.
+                      </p>
+                    </div>
+                  </Card>
+
+                  <Card>
+                    <div className="p-6 lg:p-8 h-full flex flex-col justify-center">
+                      <div className="flex items-center gap-4 lg:gap-6 mb-4 lg:mb-6">
+                        <div className="w-12 h-12 lg:w-14 lg:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-2xl lg:text-3xl font-serif font-bold text-foreground">Innovation Hub</h3>
+                      </div>
+                      <p className="text-base lg:text-lg text-foreground/90 leading-relaxed font-light">
+                        Through workshops, hackathons, ideathons, and startup mentorship programs, we create an ecosystem where creativity thrives and groundbreaking ideas come to life through collaboration and experimentation.
+                      </p>
+                    </div>
+                  </Card>
+
+                  <Card>
+                    <div className="p-6 lg:p-8 h-full flex flex-col justify-center">
+                      <div className="flex items-center gap-4 lg:gap-6 mb-4 lg:mb-6">
+                        <div className="w-12 h-12 lg:w-14 lg:h-14 border-2 border-foreground/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-2xl lg:text-3xl font-serif font-bold text-foreground">Community</h3>
+                      </div>
+                      <p className="text-base lg:text-lg text-foreground/90 leading-relaxed font-light">
+                        Join a vibrant community of like-minded innovators, entrepreneurs, and dreamers. Network, collaborate, and build lasting connections that extend beyond the classroom into the real world of business and innovation.
+                      </p>
+                    </div>
+                  </Card>
+                </CardSwap>
+              </div>
             </div>
           </div>
         </div>
