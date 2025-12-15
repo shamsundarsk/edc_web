@@ -159,8 +159,8 @@ export default function HeroFigmaNew({ className }: HeroFigmaNewProps) {
 
         {/* Main Content - Always visible and properly sized */}
         <div className="relative z-20 text-center max-w-4xl mx-auto">
-          {/* Main Heading - Responsive typography */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#EE6983] tracking-tight leading-tight mb-8 sm:mb-12 md:mb-16 px-4">
+          {/* Main Heading - Smaller responsive typography */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-[#EE6983] tracking-tight leading-tight mb-8 sm:mb-12 md:mb-16 px-4">
             Empowering Young<br />Innovators & Entrepreneurs
           </h1>
 

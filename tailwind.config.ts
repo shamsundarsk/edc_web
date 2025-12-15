@@ -11,6 +11,7 @@ const config: Config = {
 		extend: {
 			fontFamily: {
 				rundeck: ['Rundeck', 'serif'],
+				fraunces: ['var(--font-fraunces)', 'serif'],
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

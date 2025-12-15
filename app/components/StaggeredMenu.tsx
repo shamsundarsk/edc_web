@@ -51,6 +51,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuClose
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [showTitle, setShowTitle] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
@@ -297,6 +298,26 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     }
   }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
 
+  // Scroll detection for liquid glass title with throttling
+  React.useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const shouldShowTitle = scrollY > 100; // Show title after scrolling 100px
+          setShowTitle(shouldShowTitle);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const animateText = useCallback((opening: boolean) => {
     const inner = textInnerRef.current;
     if (!inner) return;
@@ -365,39 +386,86 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       </div>
 
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
-          <img
-            src={logoUrl}
-            alt="Logo"
-            className="sm-logo-img"
-            draggable={false}
-            width={110}
-            height={24}
-          />
+        {/* Default Navigation - Visible when not scrolled */}
+        <div className={`sm-default-nav ${showTitle ? 'sm-nav-hidden' : 'sm-nav-visible'}`}>
+          <div className="sm-logo" aria-label="Logo">
+            <img
+              src={logoUrl}
+              alt="Logo"
+              className="sm-logo-img"
+              draggable={false}
+              width={110}
+              height={24}
+            />
+          </div>
+
+          <button
+            ref={toggleBtnRef}
+            className="sm-toggle"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="staggered-menu-panel"
+            onClick={toggleMenu}
+            type="button"
+          >
+            <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
+              <span ref={textInnerRef} className="sm-toggle-textInner">
+                {textLines.map((l, i) => (
+                  <span className="sm-toggle-line" key={i}>{l}</span>
+                ))}
+              </span>
+            </span>
+
+            <span ref={iconRef} className="sm-icon" aria-hidden="true">
+              <span ref={plusHRef} className="sm-icon-line" />
+              <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+            </span>
+          </button>
         </div>
 
-        <button
-          ref={toggleBtnRef}
-          className="sm-toggle"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="staggered-menu-panel"
-          onClick={toggleMenu}
-          type="button"
+        {/* Liquid Glass Navigation Bar - Appears on scroll */}
+        <div 
+          className={`sm-liquid-title-bar ${showTitle ? 'sm-title-visible' : 'sm-title-hidden'}`}
+          aria-label="Entrepreneurship Development Cell Navigation"
         >
-          <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((l, i) => (
-                <span className="sm-toggle-line" key={i}>{l}</span>
-              ))}
-            </span>
-          </span>
+          <div className="sm-title-bar-content">
+            {/* Logo in liquid glass bar */}
+            <div className="sm-liquid-logo" aria-label="Logo">
+              <img
+                src={logoUrl}
+                alt="Logo"
+                className="sm-liquid-logo-img"
+                draggable={false}
+                width={90}
+                height={20}
+              />
+            </div>
 
-          <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
-          </span>
-        </button>
+            {/* Title text */}
+            <span className="sm-title-text">
+              Entrepreneurship Development Cell
+            </span>
+
+            {/* Menu button in liquid glass bar */}
+            <button
+              className="sm-liquid-toggle"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="staggered-menu-panel"
+              onClick={toggleMenu}
+              type="button"
+            >
+              <span className="sm-liquid-toggle-text" aria-hidden="true">
+                {open ? 'Close' : 'Menu'}
+              </span>
+
+              <span className="sm-liquid-icon" aria-hidden="true">
+                <span className="sm-liquid-icon-line" />
+                <span className="sm-liquid-icon-line sm-liquid-icon-line-v" />
+              </span>
+            </button>
+          </div>
+        </div>
       </header>
 
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
