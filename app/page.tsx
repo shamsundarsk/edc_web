@@ -115,7 +115,7 @@ const HomePage = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-12 sm:py-16 md:py-24 px-4 bg-background relative overflow-visible" style={{ zIndex: 100 }}>
+      <section className="py-20 sm:py-24 md:py-32 lg:py-40 px-4 bg-background relative overflow-visible" style={{ zIndex: 100 }}>
         <div className="max-w-7xl mx-auto overflow-visible">
           <div style={{ minHeight: '600px', position: 'relative', overflow: 'visible' }} className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Left Side - Title and Navigation */}

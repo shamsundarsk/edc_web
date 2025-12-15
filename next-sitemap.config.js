@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://edccell.edu',
+  siteUrl: process.env.SITE_URL || 'https://your-vercel-domain.vercel.app',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/admin', '/admin/*'],

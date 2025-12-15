@@ -6,4 +6,4 @@ Allow: /
 Disallow: /admin
 
 # Sitemap location
-Sitemap: https://edccell.edu/sitemap.xml
+Sitemap: https://your-vercel-domain.vercel.app/sitemap.xml

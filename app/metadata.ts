@@ -3,8 +3,8 @@ import { Metadata } from 'next';
 const siteConfig = {
   name: 'Entrepreneurship Development Cell Coimbatore',
   description: 'Entrepreneurship Development Cell at Coimbatore - Empowering student entrepreneurs through mentorship, workshops, and startup support programs.',
-  url: 'https://edccell.edu', // Replace with your actual domain
-  ogImage: 'https://edccell.edu/og-image.jpg',
+  url: 'https://your-vercel-domain.vercel.app', // Replace with your actual Vercel domain
+  ogImage: 'https://your-vercel-domain.vercel.app/og-image.jpg',
   keywords: [
     'Entrepreneurship Development Cell',
     'EDC Coimbatore',
