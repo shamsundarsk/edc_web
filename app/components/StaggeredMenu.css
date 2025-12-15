@@ -412,7 +412,7 @@
 
 /* Title text */
 .sm-title-text {
-  font-family: var(--font-fraunces), serif;
+  font-family: 'Fraunces', serif;
   font-size: 1.125rem;
   font-weight: 700;
   color: hsl(var(--foreground));

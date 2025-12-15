@@ -5,7 +5,10 @@ import { defaultMetadata } from './metadata';
 import IntroWrapper from './components/IntroWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
-const fraunces = Fraunces({ subsets: ['latin'], axes: ['SOFT', 'WONK', 'opsz'] });
+const fraunces = Fraunces({ 
+  subsets: ['latin'], 
+  axes: ['SOFT', 'WONK', 'opsz']
+});
 
 export const metadata: Metadata = defaultMetadata;
 
@@ -22,7 +25,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#0a0a0a" />
       </head>
-      <body className={`${inter.className} ${fraunces.variable}`}>
+      <body className={`${inter.className} ${fraunces.className}`}>
         <IntroWrapper>
           {children}
         </IntroWrapper>
