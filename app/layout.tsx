@@ -29,32 +29,71 @@ export default function RootLayout({
         <IntroWrapper>
           {children}
         </IntroWrapper>
-        {/* JSON-LD Schema for Organization */}
+        {/* Enhanced JSON-LD Schema for Organization */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'Entrepreneurship Development Cell Coimbatore',
-              url: 'https://edccell.edu',
-              logo: 'https://edccell.edu/logo.png',
-              description: 'Entrepreneurship Development Cell fostering innovation and startup culture among students',
+              '@type': 'EducationalOrganization',
+              name: 'Entrepreneurship Development Cell - Coimbatore Institute of Technology',
+              alternateName: 'EDC CIT',
+              url: 'https://edc-cit.vercel.app',
+              logo: 'https://edc-cit.vercel.app/logo.png',
+              image: 'https://edc-cit.vercel.app/og-image.jpg',
+              description: 'Leading Entrepreneurship Development Cell at Coimbatore Institute of Technology. Empowering student entrepreneurs through mentorship, workshops, startup incubation, and innovation programs.',
+              foundingDate: '2020',
               address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Coimbatore',
                 addressRegion: 'Tamil Nadu',
-                addressCountry: 'IN'
+                addressCountry: 'IN',
+                postalCode: '641014'
               },
               contactPoint: {
                 '@type': 'ContactPoint',
-                email: 'edccell@college.edu',
-                contactType: 'Customer Service'
+                email: 'edc@cit.edu.in',
+                contactType: 'Customer Service',
+                availableLanguage: ['English', 'Tamil']
               },
               sameAs: [
-                'https://www.instagram.com/edccell',
-                'https://www.linkedin.com/company/edccell'
-              ]
+                'https://www.instagram.com/edc_cit',
+                'https://www.linkedin.com/company/edc-cit',
+                'https://twitter.com/edc_cit'
+              ],
+              parentOrganization: {
+                '@type': 'EducationalOrganization',
+                name: 'Coimbatore Institute of Technology',
+                url: 'https://www.cit.edu.in'
+              },
+              department: {
+                '@type': 'Organization',
+                name: 'Innovation and Entrepreneurship',
+                description: 'Fostering innovation and entrepreneurial mindset among students'
+              },
+              offers: {
+                '@type': 'Service',
+                name: 'Entrepreneurship Development Programs',
+                description: 'Comprehensive programs including mentorship, workshops, incubation support, and startup funding guidance'
+              }
+            })
+          }}
+        />
+        
+        {/* Website Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Entrepreneurship Development Cell CIT',
+              url: 'https://edc-cit.vercel.app',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://edc-cit.vercel.app/search?q={search_term_string}',
+                'query-input': 'required name=search_term_string'
+              }
             })
           }}
         />

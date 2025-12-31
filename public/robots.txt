@@ -2,8 +2,15 @@
 User-agent: *
 Allow: /
 
-# Disallow admin pages
-Disallow: /admin
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+
+# Host
+Host: https://edc-cit.vercel.app
 
 # Sitemap location
-Sitemap: https://your-vercel-domain.vercel.app/sitemap.xml
+Sitemap: https://edc-cit.vercel.app/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1

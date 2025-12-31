@@ -1,23 +1,36 @@
 import { Metadata } from 'next';
 
 const siteConfig = {
-  name: 'Entrepreneurship Development Cell Coimbatore',
-  description: 'Entrepreneurship Development Cell at Coimbatore - Empowering student entrepreneurs through mentorship, workshops, and startup support programs.',
-  url: 'https://your-vercel-domain.vercel.app', // Replace with your actual Vercel domain
-  ogImage: 'https://your-vercel-domain.vercel.app/og-image.jpg',
+  name: 'Entrepreneurship Development Cell Coimbatore | EDC CIT',
+  description: 'Leading Entrepreneurship Development Cell at Coimbatore Institute of Technology. Empowering student entrepreneurs through mentorship, workshops, startup incubation, and innovation programs. Join 1000+ aspiring entrepreneurs.',
+  url: 'https://edc-cit.vercel.app',
+  ogImage: 'https://edc-cit.vercel.app/og-image.jpg',
   keywords: [
     'Entrepreneurship Development Cell',
     'EDC Coimbatore',
+    'EDC CIT',
+    'Coimbatore Institute of Technology',
     'Student Entrepreneurs',
-    'Startup Support',
-    'Innovation Cell',
-    'Entrepreneurship Programs',
-    'Student Startups',
-    'Business Incubator',
-    'Startup Mentorship',
-    'College Entrepreneurship',
-    'Innovation Hub',
-    'Startup Ecosystem'
+    'Startup Support Coimbatore',
+    'Innovation Cell CIT',
+    'Entrepreneurship Programs Tamil Nadu',
+    'Student Startups India',
+    'Business Incubator Coimbatore',
+    'Startup Mentorship Programs',
+    'College Entrepreneurship Cell',
+    'Innovation Hub Tamil Nadu',
+    'Startup Ecosystem Coimbatore',
+    'Young Entrepreneurs India',
+    'Startup Events Coimbatore',
+    'Business Plan Competition',
+    'Ideathon Coimbatore',
+    'Hackathon CIT',
+    'Entrepreneurship Workshops',
+    'Startup Funding Support',
+    'Innovation Programs India',
+    'Student Innovation Cell',
+    'Entrepreneurship Education',
+    'Startup Community Coimbatore'
   ]
 };
 
