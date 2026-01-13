@@ -87,6 +87,7 @@ const HomePage = () => {
             { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
             { label: 'Blog', ariaLabel: 'View our blog', link: '/blog' },
             { label: 'Events', ariaLabel: 'View our events', link: '/events' },
+            { label: 'Podcast', ariaLabel: 'Listen to our podcasts', link: '/podcast' },
             { label: 'Gallery', ariaLabel: 'View our gallery', link: '/gallery' },
             { label: 'Members', ariaLabel: 'Meet our team', link: '/members' },
             { label: 'Admin', ariaLabel: 'Admin panel', link: '/admin' }

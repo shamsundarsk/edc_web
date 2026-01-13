@@ -3,12 +3,26 @@ import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export async function POST(request: Request) {
   try {
+    // Debug: Check if Cloudinary is properly configured
+    const config = cloudinary.config();
+    if (!config.cloud_name || !config.api_key || !config.api_secret) {
+      console.error('Cloudinary configuration missing:', {
+        cloud_name: !!config.cloud_name,
+        api_key: !!config.api_key,
+        api_secret: !!config.api_secret
+      });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Cloudinary configuration is incomplete" 
+      }, { status: 500 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
     
@@ -37,8 +51,12 @@ export async function POST(request: Request) {
             eager_async: true,
           })
         }, (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            reject(error);
+          } else {
+            resolve(result);
+          }
         })
         .end(buffer);
     });
@@ -46,6 +64,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, data: uploadResult });
   } catch (error: any) {
     console.error("Upload failed:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      success: false, 
+      error: error.message || "Upload failed" 
+    }, { status: 500 });
   }
 }

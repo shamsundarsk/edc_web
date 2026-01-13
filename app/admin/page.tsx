@@ -18,6 +18,7 @@ export default function AdminPage() {
   const [announcements, setAnnouncements] = useState<AnyObj[]>([]);
 
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<AnyObj>({});
 
@@ -27,6 +28,7 @@ export default function AdminPage() {
   const [eventMedia, setEventMedia] = useState<{images: string[], videos: string[]}>({ images: [], videos: [] });
   const [projectForm, setProjectForm] = useState({ name: '', team: '', links: '' });
   const [galleryForm, setGalleryForm] = useState({ caption: '', imageUrl: '' });
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [announceForm, setAnnounceForm] = useState({ message: '', date: '' });
 
   useEffect(()=>{ if (authed) fetchAll(); }, [authed]);
@@ -56,12 +58,26 @@ export default function AdminPage() {
 
   async function uploadAndSet(fileInput: File | undefined){
     if(!fileInput) return '';
-    const form = new FormData();
-    form.append('file', fileInput);
-    const res = await fetch('/api/upload', { method: 'POST', body: form });
-    const json = await res.json();
-    if (!res.ok || !json?.success) throw new Error(json?.error || 'Upload failed');
-    return json.data.secure_url as string;
+    
+    setUploadingImage(true);
+    try {
+      const form = new FormData();
+      form.append('file', fileInput);
+      const res = await fetch('/api/upload', { method: 'POST', body: form });
+      const json = await res.json();
+      
+      if (!res.ok || !json?.success) {
+        throw new Error(json?.error || 'Upload failed');
+      }
+      
+      return json.data.secure_url as string;
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      alert(`Upload failed: ${error.message}`);
+      return '';
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   async function uploadMultipleFiles(files: FileList | null, type: 'images' | 'videos') {
@@ -283,15 +299,92 @@ export default function AdminPage() {
               <h2 className="text-lg font-semibold mb-4">Add New Blog</h2>
               <form onSubmit={async(e)=>{ e.preventDefault(); await addItem('blogs', blogForm); }} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <input className="px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Title" value={blogForm.title} onChange={(e)=>setBlogForm({...blogForm, title: e.target.value})} required />
-                  <input className="px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Slug" value={blogForm.slug} onChange={(e)=>setBlogForm({...blogForm, slug: e.target.value})} required />
+                  <input 
+                    className="px-3 py-2 border border-neutral-300 rounded-lg" 
+                    placeholder="Title" 
+                    value={blogForm.title} 
+                    onChange={(e)=>setBlogForm({...blogForm, title: e.target.value})} 
+                    required 
+                  />
+                  <input 
+                    className="px-3 py-2 border border-neutral-300 rounded-lg" 
+                    placeholder="Slug" 
+                    value={blogForm.slug} 
+                    onChange={(e)=>setBlogForm({...blogForm, slug: e.target.value})} 
+                    required 
+                  />
                 </div>
-                <textarea className="w-full px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Content" value={blogForm.content} onChange={(e)=>setBlogForm({...blogForm, content: e.target.value})} required rows={3} />
-                <div className="flex items-center gap-4">
-                  <input type="file" accept="image/*" onChange={async (ev)=>{ const file = ev.target.files?.[0]; if(file){ const url = await uploadAndSet(file); setBlogForm({...blogForm, imageUrl: url}); } }} className="text-sm" />
-                  {blogForm.imageUrl && <img src={blogForm.imageUrl} alt="" className="w-16 h-16 object-cover rounded" />}
+                <textarea 
+                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg" 
+                  placeholder="Content" 
+                  value={blogForm.content} 
+                  onChange={(e)=>setBlogForm({...blogForm, content: e.target.value})} 
+                  required 
+                  rows={3} 
+                />
+                
+                {/* Image Upload Section */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-neutral-700">Featured Image</label>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={async (ev)=>{ 
+                          const file = ev.target.files?.[0]; 
+                          if(file){ 
+                            const url = await uploadAndSet(file); 
+                            if (url) {
+                              setBlogForm({...blogForm, imageUrl: url}); 
+                            }
+                          } 
+                        }} 
+                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-neutral-50 file:text-neutral-700 hover:file:bg-neutral-100"
+                        disabled={uploadingImage}
+                      />
+                      {uploadingImage && (
+                        <div className="mt-2 flex items-center gap-2 text-sm text-neutral-600">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-900"></div>
+                          Uploading image...
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Image Preview */}
+                    {blogForm.imageUrl && (
+                      <div className="relative flex-shrink-0">
+                        <img 
+                          src={blogForm.imageUrl} 
+                          alt="Preview" 
+                          className="w-20 h-20 object-cover rounded border-2 border-neutral-200" 
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setBlogForm({...blogForm, imageUrl: ''})}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600 flex items-center justify-center"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <button type="submit" className="px-4 py-2 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800" disabled={loading}>{loading?'Adding...':'Add Blog'}</button>
+
+                <button 
+                  type="submit" 
+                  className="px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-medium" 
+                  disabled={loading || uploadingImage}
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Adding Blog...
+                    </div>
+                  ) : (
+                    'Add Blog'
+                  )}
+                </button>
               </form>
             </div>
 
@@ -364,17 +457,107 @@ export default function AdminPage() {
           <div className="space-y-6">
             <div className="bg-white rounded-lg border border-neutral-200 p-6">
               <h2 className="text-lg font-semibold mb-4">Add New Member</h2>
-              <form onSubmit={async(e)=>{ e.preventDefault(); await addItem('members', memberForm); }} className="space-y-4">
+              <form onSubmit={async(e)=>{ 
+                e.preventDefault(); 
+                if (!memberForm.imageUrl) {
+                  alert('Please upload a photo first');
+                  return;
+                }
+                await addItem('members', memberForm); 
+              }} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <input className="px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Name" value={memberForm.name} onChange={(e)=>setMemberForm({...memberForm, name: e.target.value})} required />
-                  <input className="px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Role" value={memberForm.role} onChange={(e)=>setMemberForm({...memberForm, role: e.target.value})} required />
+                  <input 
+                    className="px-3 py-2 border border-neutral-300 rounded-lg" 
+                    placeholder="Name" 
+                    value={memberForm.name} 
+                    onChange={(e)=>setMemberForm({...memberForm, name: e.target.value})} 
+                    required 
+                  />
+                  <input 
+                    className="px-3 py-2 border border-neutral-300 rounded-lg" 
+                    placeholder="Role" 
+                    value={memberForm.role} 
+                    onChange={(e)=>setMemberForm({...memberForm, role: e.target.value})} 
+                    required 
+                  />
                 </div>
-                <input className="w-full px-3 py-2 border border-neutral-300 rounded-lg" placeholder="LinkedIn URL" value={memberForm.linkedin} onChange={(e)=>setMemberForm({...memberForm, linkedin: e.target.value})} />
-                <div className="flex items-center gap-4">
-                  <input type="file" accept="image/*" onChange={async (ev)=>{ const file = ev.target.files?.[0]; if(file){ const url = await uploadAndSet(file); setMemberForm({...memberForm, imageUrl: url}); } }} className="text-sm" />
-                  {memberForm.imageUrl && <img src={memberForm.imageUrl} alt="" className="w-12 h-12 object-cover rounded-full" />}
+                <input 
+                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg" 
+                  placeholder="LinkedIn URL (optional)" 
+                  value={memberForm.linkedin} 
+                  onChange={(e)=>setMemberForm({...memberForm, linkedin: e.target.value})} 
+                />
+                
+                {/* Image Upload Section */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-neutral-700">Profile Photo *</label>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={async (ev)=>{ 
+                          const file = ev.target.files?.[0]; 
+                          if(file){ 
+                            const url = await uploadAndSet(file); 
+                            if (url) {
+                              setMemberForm({...memberForm, imageUrl: url}); 
+                            }
+                          } 
+                        }} 
+                        className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-neutral-50 file:text-neutral-700 hover:file:bg-neutral-100"
+                        disabled={uploadingImage}
+                      />
+                      {uploadingImage && (
+                        <div className="mt-2 flex items-center gap-2 text-sm text-neutral-600">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-900"></div>
+                          Uploading image...
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Image Preview */}
+                    <div className="flex-shrink-0">
+                      {memberForm.imageUrl ? (
+                        <div className="relative">
+                          <img 
+                            src={memberForm.imageUrl} 
+                            alt="Preview" 
+                            className="w-20 h-20 object-cover rounded-full border-2 border-neutral-200" 
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setMemberForm({...memberForm, imageUrl: ''})}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600 flex items-center justify-center"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="w-20 h-20 bg-neutral-100 rounded-full border-2 border-dashed border-neutral-300 flex items-center justify-center">
+                          <svg className="w-8 h-8 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <button type="submit" className="px-4 py-2 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800" disabled={loading}>{loading?'Adding...':'Add Member'}</button>
+
+                <button 
+                  type="submit" 
+                  className="px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-medium" 
+                  disabled={loading || uploadingImage || !memberForm.imageUrl}
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Adding Member...
+                    </div>
+                  ) : (
+                    'Add Member'
+                  )}
+                </button>
               </form>
             </div>
 
@@ -719,14 +902,197 @@ export default function AdminPage() {
         {activeTab === 'gallery' && (
           <div className="space-y-6">
             <div className="bg-white rounded-lg border border-neutral-200 p-6">
-              <h2 className="text-lg font-semibold mb-4">Add New Image</h2>
-              <form onSubmit={async(e)=>{ e.preventDefault(); await addItem('gallery', galleryForm); }} className="space-y-4">
-                <input className="w-full px-3 py-2 border border-neutral-300 rounded-lg" placeholder="Caption (optional)" value={galleryForm.caption} onChange={(e)=>setGalleryForm({...galleryForm, caption: e.target.value})} />
-                <div className="flex items-center gap-4">
-                  <input type="file" accept="image/*" onChange={async (ev)=>{ const file = ev.target.files?.[0]; if(file){ const url = await uploadAndSet(file); setGalleryForm({...galleryForm, imageUrl: url}); } }} className="text-sm" required />
-                  {galleryForm.imageUrl && <img src={galleryForm.imageUrl} alt="" className="w-16 h-16 object-cover rounded" />}
+              <h2 className="text-lg font-semibold mb-4">Add Gallery Images</h2>
+              
+              {/* Multiple Images Upload Form */}
+              <form onSubmit={async(e)=>{ 
+                e.preventDefault(); 
+                if (galleryImages.length === 0 && !galleryForm.imageUrl) {
+                  alert('Please select at least one image');
+                  return;
+                }
+                
+                // Upload all selected images
+                const imagesToAdd = [...galleryImages];
+                if (galleryForm.imageUrl) {
+                  imagesToAdd.push(galleryForm.imageUrl);
+                }
+                
+                setLoading(true);
+                try {
+                  // Add each image as a separate gallery item
+                  for (const imageUrl of imagesToAdd) {
+                    await addItem('gallery', { 
+                      imageUrl, 
+                      caption: galleryForm.caption || '' 
+                    });
+                  }
+                  // Reset form
+                  setGalleryImages([]);
+                  setGalleryForm({ caption: '', imageUrl: '' });
+                } catch (error) {
+                  alert('Error adding images to gallery');
+                } finally {
+                  setLoading(false);
+                }
+              }} className="space-y-6">
+                
+                {/* Caption for all images */}
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Caption (will be applied to all uploaded images)
+                  </label>
+                  <input 
+                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg" 
+                    placeholder="Enter caption for all images (optional)" 
+                    value={galleryForm.caption} 
+                    onChange={(e)=>setGalleryForm({...galleryForm, caption: e.target.value})} 
+                  />
                 </div>
-                <button type="submit" className="px-4 py-2 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800" disabled={loading}>{loading?'Adding...':'Add Image'}</button>
+
+                {/* Multiple File Upload */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-neutral-700">
+                    Select Multiple Images
+                  </label>
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    multiple 
+                    onChange={async (e) => {
+                      const files = e.target.files;
+                      if (!files || files.length === 0) return;
+                      
+                      setUploadingImage(true);
+                      try {
+                        const uploadPromises = Array.from(files).map(file => uploadAndSet(file));
+                        const urls = await Promise.all(uploadPromises);
+                        const validUrls = urls.filter(url => url);
+                        setGalleryImages(prev => [...prev, ...validUrls]);
+                      } catch (error) {
+                        alert('Error uploading images');
+                      } finally {
+                        setUploadingImage(false);
+                      }
+                    }}
+                    className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-neutral-50 file:text-neutral-700 hover:file:bg-neutral-100"
+                    disabled={uploadingImage}
+                  />
+                  
+                  {uploadingImage && (
+                    <div className="flex items-center gap-2 text-sm text-neutral-600">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-neutral-900"></div>
+                      Uploading images...
+                    </div>
+                  )}
+                </div>
+
+                {/* Single Image Upload (Alternative) */}
+                <div className="border-t pt-4">
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Or Upload Single Image
+                  </label>
+                  <div className="flex items-center gap-4">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={async (ev)=>{ 
+                        const file = ev.target.files?.[0]; 
+                        if(file){ 
+                          const url = await uploadAndSet(file); 
+                          if (url) {
+                            setGalleryForm({...galleryForm, imageUrl: url}); 
+                          }
+                        } 
+                      }} 
+                      className="text-sm flex-1"
+                      disabled={uploadingImage}
+                    />
+                    {galleryForm.imageUrl && (
+                      <div className="relative">
+                        <img src={galleryForm.imageUrl} alt="Preview" className="w-16 h-16 object-cover rounded border-2 border-neutral-200" />
+                        <button
+                          type="button"
+                          onClick={() => setGalleryForm({...galleryForm, imageUrl: ''})}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600 flex items-center justify-center"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Preview Grid for Multiple Images */}
+                {galleryImages.length > 0 && (
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-neutral-700">
+                      Selected Images ({galleryImages.length})
+                    </label>
+                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 max-h-64 overflow-y-auto p-3 border border-neutral-200 rounded-lg bg-neutral-50">
+                      {galleryImages.map((url, idx) => (
+                        <div key={idx} className="relative group">
+                          <img 
+                            src={url} 
+                            alt={`Preview ${idx + 1}`} 
+                            className="w-full aspect-square object-cover rounded border-2 border-neutral-200 hover:border-neutral-400 transition-colors" 
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setGalleryImages(prev => prev.filter((_, i) => i !== idx))}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                          >
+                            ×
+                          </button>
+                          <div className="absolute bottom-1 left-1 right-1 bg-black/50 text-white text-xs px-1 py-0.5 rounded text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            {idx + 1}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="text-sm text-neutral-600">
+                    {galleryImages.length > 0 && (
+                      <span>{galleryImages.length} image{galleryImages.length !== 1 ? 's' : ''} ready to upload</span>
+                    )}
+                    {galleryForm.imageUrl && galleryImages.length > 0 && <span> + 1 single image</span>}
+                    {galleryForm.imageUrl && galleryImages.length === 0 && <span>1 image ready to upload</span>}
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    {(galleryImages.length > 0 || galleryForm.imageUrl) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setGalleryImages([]);
+                          setGalleryForm({ caption: '', imageUrl: '' });
+                        }}
+                        className="px-4 py-2 text-neutral-600 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
+                      >
+                        Clear All
+                      </button>
+                    )}
+                    
+                    <button 
+                      type="submit" 
+                      className="px-6 py-2 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors" 
+                      disabled={loading || uploadingImage || (galleryImages.length === 0 && !galleryForm.imageUrl)}
+                    >
+                      {loading ? (
+                        <div className="flex items-center gap-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                          Adding Images...
+                        </div>
+                      ) : (
+                        `Add ${(galleryImages.length + (galleryForm.imageUrl ? 1 : 0))} Image${(galleryImages.length + (galleryForm.imageUrl ? 1 : 0)) !== 1 ? 's' : ''} to Gallery`
+                      )}
+                    </button>
+                  </div>
+                </div>
               </form>
             </div>
 
@@ -753,7 +1119,9 @@ export default function AdminPage() {
                           </button>
                         </div>
                       </td>
-                      <td className="px-4 py-3"><img src={g.imageUrl} alt="" className="w-20 h-20 object-cover rounded" /></td>
+                      <td className="px-4 py-3">
+                        <img src={g.imageUrl} alt="" className="w-20 h-20 object-cover rounded border-2 border-neutral-200" />
+                      </td>
                       <td className="px-4 py-3">
                         {editingId === g.id ? (
                           <input className="w-full px-2 py-1 border border-neutral-300 rounded" value={editForm.caption || ''} onChange={(e)=>setEditForm({...editForm, caption: e.target.value})} />
