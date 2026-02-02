@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights - EDC Blogs</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1349",
+                        "background-light": "#f8f6f6", 
+                        "background-dark": "#221015",
+                        "charcoal": "#1b0d11",
+                        "charcoal-light": "#333333",
+                        "text-subtle": "#666666",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-charcoal dark:text-gray-100 transition-colors duration-500 ease-in-out selection:bg-primary selection:text-white">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<nav class="absolute top-0 w-full px-6 md:px-12 py-8 z-50 flex justify-between items-center bg-transparent">
+<a class="text-xl font-bold tracking-tight text-charcoal dark:text-white hover:opacity-70 transition-opacity" href="#">
+                EDC
+            </a>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-sans text-sm font-medium text-charcoal-light/70 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-sans text-sm font-medium text-charcoal-light/70 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Vision</a>
+<a class="font-sans text-sm font-medium text-primary dark:text-white" href="#">Insights</a>
+<a class="font-sans text-sm font-medium text-charcoal-light/70 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Events</a>
+</div>
+<button class="md:hidden text-charcoal dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+<main class="w-full px-6 md:px-12 pt-40 pb-20 relative z-10 flex flex-col items-center">
+<header class="max-w-[1000px] w-full mb-24 md:mb-32 animate-fade-in-up opacity-0">
+<h1 class="text-charcoal dark:text-white text-[12vw] md:text-[8rem] leading-[0.9] font-light tracking-[-0.03em]">
+                    Insights<span class="text-primary">.</span>
+</h1>
+<p class="font-sans text-charcoal-light/60 dark:text-gray-400 mt-6 md:mt-8 text-sm md:text-base uppercase tracking-widest pl-2">
+                    Curated thoughts on innovation &amp; scale
+                </p>
+</header>
+<section class="max-w-[1000px] w-full flex flex-col">
+<article class="group relative py-12 border-t border-charcoal/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 animate-fade-in-up delay-100 opacity-0 transition-all duration-500 hover:bg-white/40 dark:hover:bg-white/5 md:px-4 -mx-4 rounded-xl cursor-pointer">
+<div class="md:w-32 flex-shrink-0">
+<span class="font-sans text-primary text-sm font-medium tracking-wide">Oct 24, 2024</span>
+</div>
+<div class="flex flex-col gap-3 max-w-2xl">
+<h2 class="text-3xl md:text-4xl text-charcoal dark:text-white font-normal group-hover:text-primary transition-colors duration-300">
+                            The Architect's Dilemma
+                        </h2>
+<p class="font-sans text-text-subtle dark:text-gray-400 font-light leading-relaxed text-lg">
+                            Balancing the structural integrity of a business model with the chaotic nature of rapid scaling. A look into sustainable growth.
+                        </p>
+</div>
+<div class="md:ml-auto mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_outward</span>
+</div>
+</article>
+<article class="group relative py-12 border-t border-charcoal/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 animate-fade-in-up delay-200 opacity-0 transition-all duration-500 hover:bg-white/40 dark:hover:bg-white/5 md:px-4 -mx-4 rounded-xl cursor-pointer">
+<div class="md:w-32 flex-shrink-0">
+<span class="font-sans text-primary text-sm font-medium tracking-wide">Oct 10, 2024</span>
+</div>
+<div class="flex flex-col gap-3 max-w-2xl">
+<h2 class="text-3xl md:text-4xl text-charcoal dark:text-white font-normal group-hover:text-primary transition-colors duration-300">
+                            Minimalism in Product
+                        </h2>
+<p class="font-sans text-text-subtle dark:text-gray-400 font-light leading-relaxed text-lg">
+                            Why removing features is often more powerful than adding them. Case studies on streamlined user experiences.
+                        </p>
+</div>
+<div class="md:ml-auto mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_outward</span>
+</div>
+</article>
+<article class="group relative py-12 border-t border-charcoal/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 animate-fade-in-up delay-300 opacity-0 transition-all duration-500 hover:bg-white/40 dark:hover:bg-white/5 md:px-4 -mx-4 rounded-xl cursor-pointer">
+<div class="md:w-32 flex-shrink-0">
+<span class="font-sans text-primary text-sm font-medium tracking-wide">Sep 28, 2024</span>
+</div>
+<div class="flex flex-col gap-3 max-w-2xl">
+<h2 class="text-3xl md:text-4xl text-charcoal dark:text-white font-normal group-hover:text-primary transition-colors duration-300">
+                            Venture Capital Dynamics
+                        </h2>
+<p class="font-sans text-text-subtle dark:text-gray-400 font-light leading-relaxed text-lg">
+                            Understanding the psychology of the investor. How to position your narrative for maximum impact in seed rounds.
+                        </p>
+</div>
+<div class="md:ml-auto mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_outward</span>
+</div>
+</article>
+<article class="group relative py-12 border-t border-b border-charcoal/10 dark:border-white/10 flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 animate-fade-in-up delay-300 opacity-0 transition-all duration-500 hover:bg-white/40 dark:hover:bg-white/5 md:px-4 -mx-4 rounded-xl cursor-pointer">
+<div class="md:w-32 flex-shrink-0">
+<span class="font-sans text-primary text-sm font-medium tracking-wide">Sep 15, 2024</span>
+</div>
+<div class="flex flex-col gap-3 max-w-2xl">
+<h2 class="text-3xl md:text-4xl text-charcoal dark:text-white font-normal group-hover:text-primary transition-colors duration-300">
+                            The Zero to One Canvas
+                        </h2>
+<p class="font-sans text-text-subtle dark:text-gray-400 font-light leading-relaxed text-lg">
+                            Before the product, there is the problem. A deep dive into problem space validation and early discovery.
+                        </p>
+</div>
+<div class="md:ml-auto mt-4 md:mt-0 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_outward</span>
+</div>
+</article>
+<div class="mt-16 flex justify-center opacity-0 animate-[fadeIn_1s_ease-out_1s_forwards]">
+<button class="font-sans text-sm uppercase tracking-widest text-charcoal-light dark:text-gray-400 hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1">Load Older Entries</button>
+</div>
+</section>
+<div aria-hidden="true" class="absolute top-0 right-0 w-[60%] h-[60%] bg-gradient-to-bl from-rose-50/50 to-transparent dark:from-rose-900/5 dark:to-transparent blur-[120px] -z-10 pointer-events-none"></div>
+</main>
+<footer class="w-full px-6 md:px-12 py-12 mt-auto bg-transparent">
+<div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6 border-t border-charcoal/10 dark:border-white/10 pt-8">
+<div class="flex items-center gap-2">
+<span class="text-charcoal dark:text-white text-base font-bold tracking-tight">EDC</span>
+<span class="hidden md:inline text-charcoal-light/30 dark:text-white/30 text-sm mx-2">|</span>
+<span class="text-charcoal-light dark:text-gray-500 text-xs font-sans">© 2024</span>
+</div>
+<nav class="flex gap-8">
+<a class="text-xs font-sans uppercase tracking-wider text-charcoal-light dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Instagram</a>
+<a class="text-xs font-sans uppercase tracking-wider text-charcoal-light dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">LinkedIn</a>
+</nav>
+</div>
+</footer>
+</div>
+<script>
+        // Check for dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+</body></html>

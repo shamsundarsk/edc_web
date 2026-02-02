@@ -1,13 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import { Inter, Noto_Serif } from 'next/font/google';
 import './globals.css';
 import { defaultMetadata } from './metadata';
 import IntroWrapper from './components/IntroWrapper';
 
-const inter = Inter({ subsets: ['latin'] });
-const fraunces = Fraunces({ 
-  subsets: ['latin'], 
-  axes: ['SOFT', 'WONK', 'opsz']
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
+const notoSerif = Noto_Serif({ 
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-noto-serif',
 });
 
 export const metadata: Metadata = defaultMetadata;
@@ -25,7 +30,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#0a0a0a" />
       </head>
-      <body className={`${inter.className} ${fraunces.className}`}>
+      <body className={`${inter.variable} ${notoSerif.variable} font-sans bg-background text-foreground antialiased`}>
         <IntroWrapper>
           {children}
         </IntroWrapper>

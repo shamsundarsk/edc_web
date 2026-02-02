@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import SideNav from '@/app/components/SideNav';
-import ChromaGrid, { ChromaItem } from '@/app/components/ChromaGrid';
+import MinimalNav from '../components/MinimalNav';
+import MinimalFooter from '../components/MinimalFooter';
 
 export default function MembersPage() {
   const [members, setMembers] = useState<any[]>([]);
@@ -15,149 +15,85 @@ export default function MembersPage() {
         setMembers(data.items || []);
         setLoading(false);
       })
-      .catch(err => {
-        console.error(err);
+      .catch(error => {
+        console.error('Error fetching members:', error);
         setLoading(false);
       });
   }, []);
 
-  // Function to group members by teams
-  const groupMembersByTeam = () => {
-    const teams: { [key: string]: any[] } = {};
-    
-    members.forEach(member => {
-      const role = member.role || 'Other';
-      let teamKey = 'Other Team';
-      
-      // Categorize based on role
-      if (role.toLowerCase().includes('secretary') || role.toLowerCase().includes('treasurer')) {
-        teamKey = 'Leadership Team';
-      } else if (role.toLowerCase().includes('director')) {
-        teamKey = 'Directors';
-      } else if (role.toLowerCase().includes('ideabin')) {
-        teamKey = 'Ideabin Team';
-      } else if (role.toLowerCase().includes('podcast')) {
-        teamKey = 'Podcast Team';
-      } else if (role.toLowerCase().includes('event')) {
-        teamKey = 'Event Planning Team';
-      } else if (role.toLowerCase().includes('startup')) {
-        teamKey = 'Let\'s Startup Team';
-      } else if (role.toLowerCase().includes('outreach')) {
-        teamKey = 'Outreach Team';
-      }
-      
-      if (!teams[teamKey]) {
-        teams[teamKey] = [];
-      }
-      teams[teamKey].push(member);
-    });
-    
-    return teams;
-  };
-
-  // Function to render members organized by teams
-  const renderMembersByTeams = () => {
-    const teamGroups = groupMembersByTeam();
-    const teamOrder = [
-      'Leadership Team',
-      'Directors', 
-      'Ideabin Team',
-      'Podcast Team',
-      'Event Planning Team',
-      'Let\'s Startup Team',
-      'Outreach Team',
-      'Other Team'
-    ];
-
-    return (
-      <div className="space-y-16">
-        {teamOrder.map(teamName => {
-          const teamMembers = teamGroups[teamName];
-          if (!teamMembers || teamMembers.length === 0) return null;
-
-          return (
-            <div key={teamName} className="space-y-8">
-              {/* Team Title */}
-              <div className="text-center">
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4 tracking-tight">
-                  {teamName}
-                </h2>
-                <div className="w-24 h-1 bg-[#EE6983] mx-auto rounded-full"></div>
-              </div>
-
-              {/* Team Members Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
-                {teamMembers.map(member => (
-                  <div key={member.id} className="group liquid-glass hover:shadow-xl transition-all duration-500 overflow-hidden rounded-xl cursor-pointer w-full max-w-sm">
-                    {/* Member Photo */}
-                    <div className="aspect-square overflow-hidden rounded-t-xl relative">
-                      <img 
-                        src={member.imageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name || 'Member')}&size=512&background=random`}
-                        alt={member.name || 'Team Member'} 
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                      />
-                      <div className="absolute inset-0 bg-[#EE6983]/20 group-hover:bg-[#EE6983]/10 transition-all duration-700"></div>
-                    </div>
-                    
-                    {/* Member Info */}
-                    <div className="p-6 border-t border-foreground/10">
-                      <h3 className="text-xl font-serif font-bold text-foreground mb-2 text-center">
-                        {member.name || 'Team Member'}
-                      </h3>
-                      <p className="text-foreground/70 text-center mb-4 font-light">
-                        {member.role || 'Member'}
-                      </p>
-                      
-                      {/* LinkedIn Button */}
-                      {member.linkedin && (
-                        <div className="text-center">
-                          <button
-                            onClick={() => window.open(member.linkedin, '_blank')}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#850E35] text-[#EE6983] text-sm font-medium rounded-full hover:bg-[#850E35]/90 transition-all duration-300"
-                          >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                            LinkedIn
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+  // Default members if API fails and loading is complete
+  const displayMembers = members.length > 0 ? members : (loading ? [] : [
+    { id: 1, name: 'Alexander Wright', role: 'President' },
+    { id: 2, name: 'Elena Rossi', role: 'Vice President' },
+    { id: 3, name: 'Marcus Chen', role: 'Head of Product' },
+    { id: 4, name: "Sarah O'Connor", role: 'Head of Outreach' },
+    { id: 5, name: 'David Kim', role: 'Tech Lead' },
+    { id: 6, name: 'Priya Patel', role: 'Events Coordinator' },
+  ]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <SideNav currentPath="/members" />
-      <div className="container mx-auto px-4 py-12 max-w-7xl">
-        
-        <div className="mt-12 mb-20 text-center border-b border-foreground/10 pb-12">
-          <h1 className="text-6xl md:text-7xl font-serif font-bold text-foreground mb-6 tracking-tight">Our Team</h1>
-          <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-light">The individuals driving innovation and entrepreneurship</p>
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-white">
+      <MinimalNav />
+
+      <main className="flex flex-col items-center min-h-screen w-full px-6 pt-32 pb-20 relative z-10">
+        <div className="max-w-[1400px] w-full flex flex-col gap-20 md:gap-32">
+          <div className="flex flex-col items-start gap-6 border-b border-foreground/10 pb-16 w-full">
+            <div className="title-gradient">
+              <h1 className="text-foreground text-[12vw] md:text-[8vw] leading-[0.85] tracking-[-0.04em] font-light font-display select-none">
+                Founders<span className="text-primary">.</span>
+              </h1>
+            </div>
+            <div className="w-full flex justify-between items-end">
+              <p className="font-sans text-foreground/60 text-sm md:text-base max-w-md leading-relaxed font-light">
+                The architects of our ecosystem. A collective of ambitious minds driving innovation and fostering the spirit of entrepreneurship.
+              </p>
+              <span className="hidden md:block font-sans text-xs tracking-widest uppercase text-foreground/40">
+                Academic Year 2024-25
+              </span>
+            </div>
+          </div>
+
+          {loading ? (
+            // Loading skeleton
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 md:gap-y-24 w-full">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="group flex flex-col gap-2 relative animate-pulse">
+                  <div className="flex items-center justify-between border-b border-foreground/10 pb-4 mb-2">
+                    <div className="h-3 bg-foreground/10 rounded w-24"></div>
+                    <div className="h-1.5 w-1.5 rounded-full bg-foreground/10"></div>
+                  </div>
+                  <div className="h-8 bg-foreground/10 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-foreground/5 rounded w-full"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            // Actual content
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 md:gap-y-24 w-full">
+              {displayMembers.map((member, index) => (
+                <div key={member.id} className="group flex flex-col gap-2 relative opacity-0 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
+                  <div className="flex items-center justify-between border-b border-foreground/20 pb-4 mb-2 transition-all duration-500 group-hover:border-primary">
+                    <span className="font-sans text-xs tracking-widest text-foreground/40 uppercase">
+                      {member.role}
+                    </span>
+                    <div className={`h-1.5 w-1.5 rounded-full ${index === 0 ? 'bg-primary animate-pulse' : 'bg-primary/40 group-hover:bg-primary'} transition-colors`}></div>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-normal font-display text-foreground transition-all duration-300 group-hover:translate-x-2">
+                    {member.name}
+                  </h3>
+                  <p className="font-sans text-foreground/60 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    Leading innovation and entrepreneurship initiatives.
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {loading ? (
-          <div className="text-center py-24">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border border-foreground/20 border-t-foreground"></div>
-            <p className="text-foreground/50 mt-6 font-light">Loading members...</p>
-          </div>
-        ) : members.length === 0 ? (
-          <div className="text-center py-24 liquid-glass rounded-xl">
-            <p className="text-foreground/50 text-lg font-light">No team members added yet</p>
-          </div>
-        ) : (
-          <div className="px-8 py-12">
-            {renderMembersByTeams()}
-          </div>
-        )}
-      </div>
+        <div aria-hidden="true" className="absolute top-[20%] right-0 w-[50%] h-[50%] bg-gradient-to-bl from-rose-100/20 to-transparent blur-[100px] -z-10 rounded-full pointer-events-none"></div>
+      </main>
+
+      <MinimalFooter />
     </div>
   );
 }

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dialogue - EDC Contact</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1349",
+                        "background-light": "#f8f6f6", 
+                        "background-dark": "#221015",
+                        "charcoal": "#1b0d11",
+                        "charcoal-light": "#333333",
+                        "stone-line": "#e5e5e5", // Very light grey for lines
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Inter", "system-ui", "sans-serif"] // Explicit clean sans
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-charcoal dark:text-gray-100 transition-colors duration-500 ease-in-out selection:bg-primary selection:text-white">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="fixed top-0 left-0 w-full z-50 px-6 py-8 md:px-12 flex justify-between items-center backdrop-blur-sm bg-background-light/50 dark:bg-background-dark/50">
+<a class="text-charcoal dark:text-white text-xl font-bold tracking-tight z-50" href="#">EDC</a>
+<nav class="hidden md:flex items-center gap-12">
+<a class="text-sm font-sans text-charcoal-light/70 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors duration-300" href="#">Mission</a>
+<a class="text-sm font-sans text-charcoal-light/70 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors duration-300" href="#">Ventures</a>
+<a class="text-sm font-sans text-charcoal-light/70 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors duration-300" href="#">Mentors</a>
+<a class="text-sm font-sans text-charcoal dark:text-white border-b border-primary pb-0.5" href="#">Contact</a>
+</nav>
+<button class="md:hidden text-charcoal dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="flex-grow flex flex-col justify-center w-full px-6 pt-32 pb-20 md:px-20 relative z-10">
+<div class="max-w-[1400px] w-full mx-auto">
+<div class="mb-20 md:mb-32">
+<h1 class="text-charcoal dark:text-white text-[18vw] md:text-[12vw] leading-[0.8] tracking-[-0.05em] font-light select-none cursor-default animate-[fadeIn_1s_ease-out_forwards]">
+                        Dialogue<span class="text-primary">.</span>
+</h1>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start border-t border-stone-line dark:border-white/10 pt-12 animate-[fadeIn_1s_ease-out_0.3s_forwards] opacity-0">
+<div class="lg:col-span-4 flex flex-col gap-12">
+<div class="flex flex-col gap-4">
+<span class="text-primary text-xs font-sans uppercase tracking-[0.2em] font-bold">Coordinates</span>
+<div class="font-sans text-charcoal-light dark:text-gray-300 text-lg leading-relaxed font-light">
+<p>Innovation Hub, Block B</p>
+<p>University Campus</p>
+<p>Cambridge, MA 02139</p>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<span class="text-primary text-xs font-sans uppercase tracking-[0.2em] font-bold">Digital</span>
+<div class="font-sans text-charcoal-light dark:text-gray-300 text-lg leading-relaxed font-light flex flex-col gap-1">
+<a class="hover:text-primary transition-colors" href="mailto:hello@edc-visionaries.edu">hello@edc-visionaries.edu</a>
+<a class="hover:text-primary transition-colors" href="tel:+15550192834">+1 (555) 019-2834</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 mt-8">
+<span class="text-primary text-xs font-sans uppercase tracking-[0.2em] font-bold">Socials</span>
+<div class="flex gap-6">
+<a class="text-charcoal-light hover:text-primary dark:text-gray-400 transition-colors" href="#">Instagram</a>
+<a class="text-charcoal-light hover:text-primary dark:text-gray-400 transition-colors" href="#">LinkedIn</a>
+<a class="text-charcoal-light hover:text-primary dark:text-gray-400 transition-colors" href="#">Twitter</a>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8">
+<form class="flex flex-col gap-12" onsubmit="event.preventDefault();">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="group relative">
+<input class="peer w-full bg-transparent border-0 border-b border-stone-line dark:border-gray-700 py-4 text-xl text-charcoal dark:text-white placeholder-gray-400 focus:border-primary focus:ring-0 transition-colors duration-300 font-sans font-light outline-none" id="name" name="name" placeholder="Name" required="" type="text"/>
+</div>
+<div class="group relative">
+<input class="peer w-full bg-transparent border-0 border-b border-stone-line dark:border-gray-700 py-4 text-xl text-charcoal dark:text-white placeholder-gray-400 focus:border-primary focus:ring-0 transition-colors duration-300 font-sans font-light outline-none" id="email" name="email" placeholder="Email Address" required="" type="email"/>
+</div>
+</div>
+<div class="group relative">
+<input class="peer w-full bg-transparent border-0 border-b border-stone-line dark:border-gray-700 py-4 text-xl text-charcoal dark:text-white placeholder-gray-400 focus:border-primary focus:ring-0 transition-colors duration-300 font-sans font-light outline-none" id="subject" name="subject" placeholder="Topic of Discourse" type="text"/>
+</div>
+<div class="group relative">
+<textarea class="peer w-full bg-transparent border-0 border-b border-stone-line dark:border-gray-700 py-4 text-xl text-charcoal dark:text-white placeholder-gray-400 focus:border-primary focus:ring-0 transition-colors duration-300 font-sans font-light outline-none resize-none" id="message" name="message" placeholder="Your Message" rows="3"></textarea>
+</div>
+<div class="pt-8 flex justify-start">
+<button class="group relative flex items-center justify-center gap-3 bg-primary text-white rounded-full px-12 py-4 text-sm uppercase tracking-widest font-bold transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/20" type="submit">
+<span>Submit Proposal</span>
+<span class="material-symbols-outlined text-[1.2em] transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="absolute top-[20%] right-[-10%] w-[60vw] h-[60vw] bg-gradient-to-bl from-rose-100/40 to-transparent dark:from-rose-900/10 dark:to-transparent blur-[100px] -z-10 rounded-full pointer-events-none opacity-60"></div>
+</main>
+<footer class="w-full px-6 py-8 mt-auto bg-transparent">
+<div class="max-w-[1400px] mx-auto flex justify-between items-center border-t border-charcoal/5 dark:border-white/5 pt-8">
+<span class="text-charcoal-light/50 dark:text-gray-600 text-xs font-sans">© 2024 EDC Visionaries.</span>
+<span class="text-charcoal-light/50 dark:text-gray-600 text-xs font-sans">Designed for Excellence.</span>
+</div>
+</footer>
+</div>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<script>
+        // Check for dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+</body></html>

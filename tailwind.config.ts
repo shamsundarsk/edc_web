@@ -10,8 +10,8 @@ const config: Config = {
 	theme: {
 		extend: {
 			fontFamily: {
-				rundeck: ['Rundeck', 'serif'],
-				fraunces: ['var(--font-fraunces)', 'serif'],
+				display: ['var(--font-noto-serif)', 'serif'],
+				sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -25,6 +25,11 @@ const config: Config = {
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				charcoal: {
+					DEFAULT: 'hsl(var(--foreground))',
+					light: 'hsl(var(--charcoal-light))',
+					muted: 'hsl(var(--charcoal-muted))'
+				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
