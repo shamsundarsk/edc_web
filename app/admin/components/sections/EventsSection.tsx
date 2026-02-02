@@ -15,6 +15,9 @@ interface EventFormData {
   registrationLink?: string;
   completed?: boolean;
   slug?: string;
+  time?: string;
+  location?: string;
+  type?: string;
 }
 
 interface EventsSectionProps {

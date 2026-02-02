@@ -28,6 +28,9 @@ export interface Event {
   registrationLink?: string;
   slug?: string;
   completed?: boolean;
+  time?: string;
+  location?: string;
+  type?: string;
 }
 
 export interface GalleryItem {
