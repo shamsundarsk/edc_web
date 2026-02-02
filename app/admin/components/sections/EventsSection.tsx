@@ -5,6 +5,18 @@ import { Plus, Calendar, Link, Image, Video, Trash2, GripVertical } from 'lucide
 import { ApiService } from '../../services/api.service';
 import type { Event } from '../../types';
 
+interface EventFormData {
+  title: string;
+  date: string;
+  dateTBA?: boolean;
+  description: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  registrationLink?: string;
+  completed?: boolean;
+  slug?: string;
+}
+
 interface EventsSectionProps {
   events: Event[];
   onAdd: (event: Partial<Event>) => Promise<boolean>;
@@ -23,7 +35,7 @@ export function EventsSection({ events, onAdd, onUpdate, onDelete, onReorder, lo
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
-    const eventData: Partial<Event> = {
+    const eventData: EventFormData = {
       title: formData.get('title') as string,
       date: formData.get('date') as string,
       dateTBA: formData.get('dateTBA') === 'on',

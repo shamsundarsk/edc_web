@@ -27,6 +27,7 @@ export interface Event {
   videoUrl?: string;
   registrationLink?: string;
   slug?: string;
+  completed?: boolean;
 }
 
 export interface GalleryItem {

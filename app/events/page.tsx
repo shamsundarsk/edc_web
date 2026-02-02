@@ -4,21 +4,7 @@ import { useEffect, useState } from 'react';
 import { X, Calendar, Clock, MapPin, Users, ExternalLink } from 'lucide-react';
 import MinimalNav from '../components/MinimalNav';
 import MinimalFooter from '../components/MinimalFooter';
-
-interface Event {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  dateTBA?: boolean;
-  time?: string;
-  location?: string;
-  type?: string;
-  imageUrl?: string;
-  videoUrl?: string;
-  registrationLink?: string;
-  completed?: boolean;
-}
+import type { Event } from '../admin/types';
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
